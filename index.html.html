@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Şehir İşaretleme Haritası</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    #map { height: 100vh; width: 100%; }
+    .leaflet-popup-content { font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Haritayı oluştur
+    var map = L.map('map').setView([20, 0], 2);
+
+    // Harita katmanı
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Tıklayınca işaretçi ekle
+    function onMapClick(e) {
+      L.marker(e.latlng).addTo(map)
+        .bindPopup("Seçtiğiniz konum: " + e.latlng.lat.toFixed(5) + ", " + e.latlng.lng.toFixed(5))
+        .openPopup();
+    }
+    map.on('click', onMapClick);
+  </script>
+</body>
+</html>
